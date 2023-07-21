@@ -12,20 +12,18 @@ chrome.webRequest.onBeforeRequest.addListener(
         if (details.type !== "image") return;
 
         try {
-            const response = await fetch(details.url,);
-            if (!response.ok) console.error(`r/Place interceptor: Image request failed: ${response.status} ${response.statusText}`);
+            const response = await fetch(details.url);
+            if (!response.ok) chrome.tabs.sendMessage(details.tabId, { action: "error", error: error, source: "background/image_interceptor.js" });
             else {
                 let blob = await response.blob()
-                const parts = /https:\/\/garlic-bread\.reddit\.com\/media\/canvas-images\/(?:\.+)\/(.)\/(?:.+)/.exec(details.url);
+                const parts = /https:\/\/garlic-bread\.reddit\.com\/media\/canvas-images\/(?:.+)\/(.)\/(?:.+)/.exec(details.url);
                 const chunk = parts[1];
 
                 let imageData = await createImageBitmap(blob);
                 ctx.drawImage(imageData, chunkOffset[chunk].x, chunkOffset[chunk].y);
             }
         } catch (error) {
-            chrome.runtime.sendMessage({ action: "error", error: error, source: "background/image_interceptor.js" })
-        }
-        finally {
+            chrome.tabs.sendMessage(details.tabId, { action: "error", message: error, source: "background/image_interceptor.js" });
         }
 
         return { cancel: false }
