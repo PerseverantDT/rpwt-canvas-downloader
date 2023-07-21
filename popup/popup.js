@@ -1,5 +1,12 @@
 "use strict";
 
+const defaultValues = {
+    "top-left-x": -500,
+    "top-left-y": -500,
+    "bottom-right-x": 499,
+    "bottom-right-y": 499
+}
+
 document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("downloadWhole").addEventListener("click", (event) => {
         chrome.runtime.sendMessage({
@@ -29,10 +36,10 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
     document.getElementById("downloadRect").addEventListener("click", (event) => {
-        let tlx = parseInt(document.getElementById("top-left-x").value);
-        let tly = parseInt(document.getElementById("top-left-y").value);
-        let brx = parseInt(document.getElementById("bottom-right-x").value);
-        let bry = parseInt(document.getElementById("bottom-right-y").value);
+        let tlx = document.getElementById("top-left-x").valueAsNumber;
+        let tly = document.getElementById("top-left-y").valueAsNumber;
+        let brx = document.getElementById("bottom-right-x").valueAsNumber;
+        let bry = document.getElementById("bottom-right-y").valueAsNumber;
         chrome.runtime.sendMessage({
             action: "download",
             part: "rect",
@@ -44,4 +51,18 @@ document.addEventListener("DOMContentLoaded", () => {
 
         event.preventDefault();
     });
+
+    /** @type HTMLCollectionOf<HTMLInputElement> */
+    let persistentInputs = document.getElementsByClassName("persistent-input");
+    for (let input of persistentInputs) {
+        chrome.storage.local.get(input.id, (result) => {
+            if (result[input.id] === undefined)  input.value = defaultValues[input.id];
+            else input.value = result[input.id];
+        });
+    }
+    for (let input of persistentInputs) {
+        input.addEventListener("input", async (event) => {
+            await chrome.storage.local.set({[input.id]: input.valueAsNumber})
+        })
+    }
 })

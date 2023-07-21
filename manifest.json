@@ -18,7 +18,8 @@
   "permissions": [
     "webRequest",
     "tabs",
-    "downloads"
+    "downloads",
+    "storage"
   ],
   "action": {
     "default_popup": "popup/popup.html"
