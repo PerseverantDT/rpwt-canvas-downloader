@@ -23,7 +23,7 @@ chrome.webRequest.onBeforeRequest.addListener(
                 ctx.drawImage(imageData, chunkOffset[chunk].x, chunkOffset[chunk].y);
             }
         } catch (error) {
-            chrome.tabs.sendMessage(details.tabId, { action: "error", message: error, source: "background/image_interceptor.js" });
+            chrome.tabs.sendMessage(details.tabId, { action: "error", name: error.name , message: error.message, source: "background/image_interceptor.js" });
         }
 
         return { cancel: false }
