@@ -59,7 +59,7 @@ chrome.runtime.onMessage.addListener(async function (msg) {
                 [tlx, tly, brx, bry] = [0, 0, 3000, 2000];
                 break;
             case "whole":
-                [tlx, tly, brx, bry] = [1000, 500, 2000, 1500];
+                [tlx, tly, brx, bry] = [1000, 500, 2500, 1500];
                 break;
             case "chunk":
                 [tlx, tly, brx, bry] = [
