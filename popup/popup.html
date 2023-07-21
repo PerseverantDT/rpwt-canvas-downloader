@@ -1,19 +1,67 @@
-<html>
+<html lang="en">
 
 <head>
-    <meta charset="UTF-8" />
+    <meta charset="UTF-8"/>
     <title>r/Place Image Interceptor</title>
 
-    <link rel="stylesheet" href="popup.css" />
+    <link rel="stylesheet" href="popup.css"/>
 </head>
 
 <body>
-    <div id="main-content">
-        <p class="large">Note: The whole canvas must be in view to ensure that the entire image is up to date.</p>
-        <button id="downloadWhole">Download whole canvas</button>
-    </div>
 
-    <script src="popup.js"></script>
+<div id="main-content">
+    <p class="large">Note: The whole canvas must be in view to ensure that the entire image is up to date.</p>
+    <form>
+        <fieldset>
+            <legend>Capture Rectangle</legend>
+            <label>Top-left </label><br/>
+            <label for="top-left-x">X:</label>
+            <input id="top-left-x" type="number" min="-500" max="499" value="-500"/>
+            <label for="top-left-y">Y: </label>
+            <input id="top-left-y" type="number" min="-500" max="499" value="-500"/>
+            <br>
+            <label>Bottom-right </label> <br/>
+            <label for="bottom-right-x">X:</label>
+            <input id="bottom-right-x" type="number" min="-500" max="499" value="499"/>
+            <label for="bottom-right-y">Y: </label>
+            <input id="bottom-right-y" type="number" min="-500" max="499" value="499"/>
+            <br/><br/>
+
+            <button id="downloadRect">Capture</button>
+        </fieldset>
+        <br>
+        <fieldset>
+            <legend>Capture Chunk</legend>
+            <button class="flex-left" id="downloadChunk0" disabled>0</button>
+            <button class="flex-left" id="downloadChunk1">1</button>
+            <button class="flex-left" id="downloadChunk2" disabled>2</button>
+            <br/>
+            <button class="flex-left" id="downloadChunk3" disabled>3</button>
+            <button class="flex-left" id="downloadChunk4">4</button>
+            <button class="flex-left" id="downloadChunk5" disabled>5</button>
+            <br/><br/>
+            <div>
+                <label class="large">Chunk Coordinates:</label>
+                <ul>
+                    <li>Chunk 0: (-1500, -500) to (-501, -1)</li>
+                    <li>Chunk 1: (-500, -500) to (499, -1)</li>
+                    <li>Chunk 2: (500, -500) to (1499, -1)</li>
+                    <li>Chunk 3: (-1500, 0) to (-501, 499)</li>
+                    <li>Chunk 4: (-500, 0) to (499, 499)</li>
+                    <li>Chunk 5: (500, 0) to (1499, 499)</li>
+                </ul>
+            </div>
+        </fieldset>
+        <br/>
+        <fieldset>
+            <legend>Download Whole Canvas</legend>
+            <button id="downloadWhole">Download Current Canvas</button>
+            <button id="downloadFull">Download Full Canvas</button>
+        </fieldset>
+    </form>
+</div>
+
+<script src="popup.js"></script>
 </body>
 
 </html>

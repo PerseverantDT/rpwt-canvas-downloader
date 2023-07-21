@@ -1,3 +1,4 @@
-# VSCode config files
+# config files
 jsconfig.json
 .vscode/
+.idea/
