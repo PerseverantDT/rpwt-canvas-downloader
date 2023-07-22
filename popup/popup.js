@@ -11,7 +11,8 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("downloadWhole").addEventListener("click", (event) => {
         chrome.runtime.sendMessage({
             action: "download",
-            part: "whole"
+            part: "whole",
+            scale: document.getElementById("scale").valueAsNumber
         });
 
         event.preventDefault();
@@ -19,7 +20,8 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("downloadFull").addEventListener("click", (event) => {
         chrome.runtime.sendMessage({
             action: "download",
-            part: "full"
+            part: "full",
+            scale: document.getElementById("scale").valueAsNumber
         });
 
         event.preventDefault();
@@ -29,7 +31,8 @@ document.addEventListener("DOMContentLoaded", () => {
             chrome.runtime.sendMessage({
                 action: "download",
                 part: "chunk",
-                chunk: i
+                chunk: i,
+                scale: document.getElementById("scale").valueAsNumber
             });
 
             event.preventDefault();
@@ -46,7 +49,8 @@ document.addEventListener("DOMContentLoaded", () => {
             tlx: tlx,
             tly: tly,
             brx: brx,
-            bry: bry
+            bry: bry,
+            scale: document.getElementById("scale").valueAsNumber
         });
 
         event.preventDefault();

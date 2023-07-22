@@ -53,7 +53,7 @@ chrome.webRequest.onBeforeRequest.addListener(
 
 chrome.runtime.onMessage.addListener(async function (msg) {
     if (msg.action === "download") {
-        let tlx, tly, brx, bry;
+        let tlx, tly, brx, bry, scale;
         switch (msg.part) {
             case "full":
                 [tlx, tly, brx, bry] = [0, 0, 3000, 2000];
@@ -78,14 +78,16 @@ chrome.runtime.onMessage.addListener(async function (msg) {
                 ]
                 break;
         }
-
-        console.table(msg);
+        scale = msg.scale;
 
         let bufferCanvas = new OffscreenCanvas(brx - tlx, bry - tly);
         let bufferCtx = bufferCanvas.getContext("2d");
-
         bufferCtx.drawImage(canvas, -tlx, -tly);
-        saveImageData(await bufferCanvas.convertToBlob({type: "image/png"}));
+        
+        let outputCanvas = new OffscreenCanvas((brx - tlx) * scale, (bry - tly) * scale);
+        let outputCtx = outputCanvas.getContext("2d");
+        outputCtx.drawImage(bufferCanvas, 0, 0, brx - tlx, bry - tly, 0, 0, (brx - tlx) * scale, (bry - tly) * scale);
+        saveImageData(await outputCanvas.convertToBlob({type: "image/png"}));
     }
 });
 
