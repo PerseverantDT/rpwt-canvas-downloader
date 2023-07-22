@@ -1,6 +1,6 @@
 {
   "name": "r/place 2023 Canvas Downloader",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "manifest_version": 3,
   "description": "An extension to intercept and store image requests from the r/place servers.",
   "icons": {
@@ -26,5 +26,15 @@
   },
   "background": {
     "service_worker": "background/image_interceptor.js"
-  }
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://*.reddit.com/r/place/*"
+      ],
+      "js": [
+        "content/error_reporter.js"
+      ]
+    }
+  ]
 }
