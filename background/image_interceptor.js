@@ -83,10 +83,12 @@ chrome.runtime.onMessage.addListener(async function (msg) {
         let bufferCanvas = new OffscreenCanvas(brx - tlx, bry - tly);
         let bufferCtx = bufferCanvas.getContext("2d");
         bufferCtx.drawImage(canvas, -tlx, -tly);
-        
+
         let outputCanvas = new OffscreenCanvas((brx - tlx) * scale, (bry - tly) * scale);
         let outputCtx = outputCanvas.getContext("2d");
+        outputCtx.imageSmoothingEnabled = false;
         outputCtx.drawImage(bufferCanvas, 0, 0, brx - tlx, bry - tly, 0, 0, (brx - tlx) * scale, (bry - tly) * scale);
+
         saveImageData(await outputCanvas.convertToBlob({type: "image/png"}));
     }
 });
