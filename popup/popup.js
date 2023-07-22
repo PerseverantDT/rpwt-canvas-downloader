@@ -65,7 +65,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
     for (let input of persistentInputs) {
-        input.addEventListener("input", async (event) => {
+        input.addEventListener("input", async () => {
             await chrome.storage.local.set({[input.id]: input.valueAsNumber})
         })
     }
