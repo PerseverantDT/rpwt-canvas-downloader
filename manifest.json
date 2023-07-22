@@ -26,5 +26,15 @@
   },
   "background": {
     "service_worker": "background/image_interceptor.js"
-  }
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://*.reddit.com/r/place/*"
+      ],
+      "js": [
+        "content/error_reporter.js"
+      ]
+    }
+  ]
 }
